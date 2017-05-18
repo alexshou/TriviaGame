@@ -1,0 +1,50 @@
+body,h1,#box{
+		max-width:100%;
+
+}
+
+body{
+	background:url("../images/background.jpg");
+	}
+
+body, h1, .container, #livesLeft, #wins, #guessedLetter{
+	text-align: center;
+}
+
+h1{
+	color:blue;
+}
+
+body{
+
+	font-size: 36px;
+}
+
+.answer{
+	font-size:25px;
+}
+
+
+
+#livesLeft{
+	color:red;
+}
+
+#wins{
+	color:blue;
+}
+
+#guessedLetter{
+	color:orange;
+}
+
+.container{
+	text-align: center;
+	width:600px;
+	height:600px;
+	border: 2px solid blue;
+	margin:auto;
+	margin-top: 20px;
+	padding: 30px 20px 30px 20px;
+	background:yellow;
+}
