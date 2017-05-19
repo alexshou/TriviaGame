@@ -19,6 +19,12 @@ var answerChoice = [["Basketball", "Hockey", "Baseball", "Football"],
 
 var answer = ["Hockey", "2003", "1", "Cavaliers", "2016", "11", "2", "3"];
 
+var images = ["assets/images/1.jpg", "assets/images/2.jpg", "assets/images/3.jpg", "assets/images/4.jpg", 
+             "assets/images/5.jpg", "assets/images/6.jpg", "assets/images/7.jpg", "assets/images/8.jpg"];
+
+
+
+
 window.onload = function() {
 
   //  Click events are done for us:
@@ -38,6 +44,10 @@ $(document).ready(function(){
   var totalQuestions = questions.length;
   var correctCount = 0;
   var inCorrectCount = 0;
+  var number = 5;
+  var delayToStart = 3000;
+  var intervalId;
+  var questionCount;
 
   // display the question and choices to the screen
 
@@ -53,8 +63,11 @@ $(document).ready(function(){
 
   }
 
+  start();
+/*
   var assignQuestion = function(question, answer){
 
+    run();//start the stopwatch when a question is displayed
     $(".start").remove();
     $(".question").append(question);
     var answerTemp = $("<button>");
@@ -65,85 +78,175 @@ $(document).ready(function(){
     answerTemp.addClass("answer").text(answer[2]).appendTo($(".choice-3"));
     var answerTemp = $("<button>");
     answerTemp.addClass("answer").text(answer[3]).appendTo($(".choice-4"));
-
   }
-
+*/
   var pickQuestion = function(){
+    
     randPick = Math.floor(Math.random()*totalQuestions);
-    while (pickedQ.indexOf[randPick] > -1){
-      pickedQ.push(randPick);
-    }  
-  
+    // randomly pick a question
+    while (pickedQ.indexOf[randPick] > -1 && pickedQ.length < totalQuestions.length){
+      randPick = Math.floor(Math.random()*totalQuestions);
+    } 
     pickedQ.push(randPick);
-    console.log(pickedQ);
-    correctAnswer = answerChoice[randPick].indexOf(answer[randPick]);
-    console.log(answerChoice[randPick]);
-    console.log(correctAnswer);
+    if(pickedQ.length > totalQuestions.length){
+      gameover();
+    }
+    else
+    {
+      run();//start the stopwatch when a question is displayed
+      console.log(pickedQ);
+      correctAnswer = answerChoice[randPick].indexOf(answer[randPick]);
+      console.log(answerChoice[randPick]);
+      console.log(correctAnswer);
+      $(".start").remove();
+      //$(".correct-answer").remove();
+     // $(".image-holder").remove();
+      $(".question").html(questions[randPick]);
+      var tempAnswer = answerChoice[randPick];
+      console.log(tempAnswer);
+      var answerTemp = $("<button>");
+      answerTemp.addClass("answer").text(tempAnswer[0]);
+      $(".choice-1").html(answerTemp);
+
+      var answerTemp = $("<button>");
+      answerTemp.addClass("answer").text(tempAnswer[1]);
+      $(".choice-2").html(answerTemp);
+
+      var answerTemp = $("<button>");
+      answerTemp.addClass("answer").text(tempAnswer[2]);
+      $(".choice-3").html(answerTemp);
+
+      var answerTemp = $("<button>");
+      answerTemp.addClass("answer").text(tempAnswer[3]);
+       $(".choice-4").html(answerTemp);
+
+       console.log("numbers of questions played: " + pickedQ.length)
+    }
   }
-  start(); 
+
+  var showCorrectAnswer = function(){
+
+      $(".answer").empty();
+      $(".correct-answer").html("The correct answer is: " + answer[randPick]);
+      console.log(answer[randPick]);
+      
+  }
+
+  function displayImage() {
+    $(".image-holder").html("<img src=" + images[randPick] + " width='400px'>");
+    console.log(images[randPick]);
+  }
+
+  function removeCorrect(){
+        $(".correct-answer").empty();
+        $(".image-holder").empty();
+  }
+
+  function stop() {
+      clearInterval(intervalId);
+      //show the correct answer
+      showCorrectAnswer();
+      displayImage();
+      setTimeout(removeCorrect, delayToStart);
+      setTimeout(pickQuestion, delayToStart+10);
+
+    }
+
+  function next(){
+     clearInterval(intervalId);
+  //   setTimeout(pickQuestion, delayToStart);
+  }
+
   $(".start").on("click", function(){
     console.log("123");
     pickQuestion();
-    assignQuestion(questions[randPick], answerChoice[randPick]);
+ //   assignQuestion(questions[randPick], answerChoice[randPick]);
   })
 
+  function run() {
+    number = 5;
+    intervalId = setInterval(decrement, 1000);
+  }
 
+    //  The decrement function.
+  function decrement() {
 
-  //pickQuestion();
-  //assignQuestion(questions[randPick], answerChoice[randPick]);
+      //  Decrease number by one.
+      number--;
+      //  Show the number in the #show-number tag.
+      $("#timer").html("<h2>" + "Time remaining: " + number + " seconds" + "</h2>");
+
+     //  Once number hits zero...
+      if (number === 0) {
+        stop();
+      }
+  }
+
+  function gameover(){
+      $(".question").empty();
+      $(".correct-answer").empty();
+      $(".image-holder").empty();
+      var displayResults = "Total correct: " + correctCount + "<br>"; 
+      displayResults += "Total incorrect: " + inCorrectCount + "<br>"; 
+      $(".game-over").append(displayResults);
+  }
   
 
   //initilize the question & answers
 
 
   $(".choice-1").on("click", function(event) {
-      console.log($(this).text());
 
       if(correctAnswer === 0){
-        alert("You're correct! Congratulations!");
         correctCount++;
-
+        next();
       }
       else
       {
-        alert("You picked the wrong option!");
         inCorrectCount++;
+        stop();
       }
 
     });
 
   $(".choice-2").on("click", function(event) {
-      console.log($(this).text());
+ 
       if(correctAnswer === 1) {
-        alert($(this).text());
+        correctCount++;
+        next();
       }
       else
       {
-        alert("wrong!");
+        inCorrectCount++;
+        stop();
       }
 
     });
 
    $(".choice-3").on("click", function(event) {
-      console.log($(this).text());
+ 
       if(correctAnswer === 2){
-        alert($(this).text());
+        correctCount++;
+        next();
       }
       else
       {
-        alert("wrong!");
+        inCorrectCount++;
+        stop();
       }
 
     });
 
     $(".choice-4").on("click", function(event) {
-      console.log($(this).text());
+ 
       if(correctAnswer === 3) {
-        alert($(this).text());
+        correctCount++;
+        next();
       }
       else
       {
-        alert("wrong!");
+        inCorrectCount++;
+        stop();
       }
 
     });

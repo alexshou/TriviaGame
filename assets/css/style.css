@@ -23,6 +23,11 @@ body{
 .answer{
 	font-size:25px;
 }
+.correct-answer{
+	font-size:30px;
+	color:red;
+	margin-bottom: 20px;
+}
 .start{
 	font-size:36px;
 }
@@ -43,7 +48,7 @@ body{
 .container{
 	text-align: center;
 	width:600px;
-	height:600px;
+	height:640px;
 	border: 2px solid blue;
 	margin:auto;
 	margin-top: 20px;
