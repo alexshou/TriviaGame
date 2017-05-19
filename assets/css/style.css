@@ -7,12 +7,17 @@ body{
 	background:url("../images/background.jpg");
 	}
 
-body, h1, .container, #livesLeft, #wins, #guessedLetter{
+body, h1, .container{
 	text-align: center;
+	font-family: Arial, sans-serif;
+
 }
 
 h1{
 	color:blue;
+	font-family: Arial, sans-serif;
+	font-size: 56px;
+	font-style: italic;
 }
 
 body{
@@ -20,8 +25,10 @@ body{
 	font-size: 36px;
 }
 
-.answer{
+.answer, .question{
+	margin-top: 5px;
 	font-size:25px;
+
 }
 .correct-answer{
 	font-size:30px;
@@ -32,18 +39,6 @@ body{
 	font-size:36px;
 }
 
-
-#livesLeft{
-	color:red;
-}
-
-#wins{
-	color:blue;
-}
-
-#guessedLetter{
-	color:orange;
-}
 
 .container{
 	text-align: center;

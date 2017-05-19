@@ -27,11 +27,6 @@ var images = ["assets/images/1.jpg", "assets/images/2.jpg", "assets/images/3.jpg
 
 window.onload = function() {
 
-  //  Click events are done for us:
-//  $(".choice-1").click();
-  //$(".choice-2").click();
-  //$(".choice-3").click();
-  //$(".choice-4").click();
 };
 
 
@@ -44,8 +39,9 @@ $(document).ready(function(){
   var totalQuestions = questions.length;
   var correctCount = 0;
   var inCorrectCount = 0;
+  var unAnsweredCount = 0;
   var number = 5;
-  var delayToStart = 3000;
+  var delayToStart = 1500;
   var intervalId;
   var questionCount;
 
@@ -57,38 +53,42 @@ $(document).ready(function(){
           .addClass("start")
           .text("START!")
           .appendTo($(".question"));
-    pickedQ = [];
-    correctCount = 0;
-    inCorrectCount = 0;
+      pickedQ = [];
+      correctCount = 0;
+      inCorrectCount = 0;
+      unAnsweredCount = 0;
+
+  }
+
+  var replay = function(){
+      var startBtn = $("<button>");
+          startBtn
+          .addClass("start")
+          .text("Replay!")
+          .appendTo($(".question"));
+      $(".displayResults").empty();
+      pickedQ = [];
+      correctCount = 0;
+      inCorrectCount = 0;
+      unAnsweredCount = 0;
 
   }
 
   start();
-/*
-  var assignQuestion = function(question, answer){
 
-    run();//start the stopwatch when a question is displayed
-    $(".start").remove();
-    $(".question").append(question);
-    var answerTemp = $("<button>");
-    answerTemp.addClass("answer").text(answer[0]).appendTo($(".choice-1"));
-    var answerTemp = $("<button>");
-    answerTemp.addClass("answer").text(answer[1]).appendTo($(".choice-2"));
-    var answerTemp = $("<button>");
-    answerTemp.addClass("answer").text(answer[2]).appendTo($(".choice-3"));
-    var answerTemp = $("<button>");
-    answerTemp.addClass("answer").text(answer[3]).appendTo($(".choice-4"));
-  }
-*/
   var pickQuestion = function(){
     
     randPick = Math.floor(Math.random()*totalQuestions);
     // randomly pick a question
-    while (pickedQ.indexOf[randPick] > -1 && pickedQ.length < totalQuestions.length){
+    while (pickedQ.indexOf(randPick) > -1 && pickedQ.length < totalQuestions){
       randPick = Math.floor(Math.random()*totalQuestions);
+      console.log("The random picked # is: " + pickedQ.indexOf(randPick));
     } 
     pickedQ.push(randPick);
-    if(pickedQ.length > totalQuestions.length){
+    console.log(pickedQ);
+    console.log(pickedQ.length);
+    console.log(totalQuestions);
+    if(pickedQ.length > totalQuestions){
       gameover();
     }
     else
@@ -103,7 +103,6 @@ $(document).ready(function(){
      // $(".image-holder").remove();
       $(".question").html(questions[randPick]);
       var tempAnswer = answerChoice[randPick];
-      console.log(tempAnswer);
       var answerTemp = $("<button>");
       answerTemp.addClass("answer").text(tempAnswer[0]);
       $(".choice-1").html(answerTemp);
@@ -128,13 +127,18 @@ $(document).ready(function(){
 
       $(".answer").empty();
       $(".correct-answer").html("The correct answer is: " + answer[randPick]);
-      console.log(answer[randPick]);
       
   }
 
   function displayImage() {
     $(".image-holder").html("<img src=" + images[randPick] + " width='400px'>");
-    console.log(images[randPick]);
+  }
+
+  var displayCongrats = function(){
+
+      $(".answer").empty();
+      $(".correct-answer").html("Congratulations, you are correct!");
+      
   }
 
   function removeCorrect(){
@@ -153,8 +157,11 @@ $(document).ready(function(){
     }
 
   function next(){
-     clearInterval(intervalId);
-  //   setTimeout(pickQuestion, delayToStart);
+      clearInterval(intervalId);
+      displayCongrats();
+      displayImage();
+      setTimeout(removeCorrect, delayToStart);
+      setTimeout(pickQuestion, delayToStart+10);
   }
 
   $(".start").on("click", function(){
@@ -179,16 +186,21 @@ $(document).ready(function(){
      //  Once number hits zero...
       if (number === 0) {
         stop();
+        unAnsweredCount++;
       }
   }
 
   function gameover(){
+      clearInterval(intervalId);
       $(".question").empty();
       $(".correct-answer").empty();
       $(".image-holder").empty();
+      $("#timer").empty();
       var displayResults = "Total correct: " + correctCount + "<br>"; 
       displayResults += "Total incorrect: " + inCorrectCount + "<br>"; 
+      displayResults += "Total unanswered: " + unAnsweredCount + "<br>";
       $(".game-over").append(displayResults);
+      replay();
   }
   
 
