@@ -23,7 +23,9 @@ body{
 .answer{
 	font-size:25px;
 }
-
+.start{
+	font-size:36px;
+}
 
 
 #livesLeft{
@@ -46,5 +48,5 @@ body{
 	margin:auto;
 	margin-top: 20px;
 	padding: 30px 20px 30px 20px;
-	background:yellow;
+	background:#d5e74d;
 }
