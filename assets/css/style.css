@@ -35,11 +35,13 @@ body{
 	color:red;
 	margin-bottom: 20px;
 }
-.start{
+.start, .replay{
 	font-size:36px;
 }
 
-
+.answer:hover { 
+    background-color: orange;
+}
 .container{
 	text-align: center;
 	width:600px;
@@ -49,4 +51,11 @@ body{
 	margin-top: 20px;
 	padding: 30px 20px 30px 20px;
 	background:#d5e74d;
+}
+
+.replay{
+	color:red;
+}
+.replay:hover{
+	background-color: orange;
 }

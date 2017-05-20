@@ -59,25 +59,38 @@ $(document).ready(function(){
       unAnsweredCount = 0;
 
   }
-
+/*
   var replay = function(){
-      var startBtn = $("<button>");
-          startBtn
-          .addClass("start")
+      var replayBtn = $("<button>");
+          replayBtn
+          .addClass("replay")
           .text("Replay!")
           .appendTo($(".question"));
-      $(".displayResults").empty();
       pickedQ = [];
       correctCount = 0;
       inCorrectCount = 0;
       unAnsweredCount = 0;
+      console.log(replayBtn);
+      console.log(correctCount);
+      console.log(inCorrectCount);
+      console.log(unAnsweredCount);
 
   }
+*/
 
+var replay = function(){
+  $(".replay").html("Restart game!");
+      pickedQ = [];
+      correctCount = 0;
+      inCorrectCount = 0;
+      unAnsweredCount = 0;
+  }
   start();
 
   var pickQuestion = function(){
-    
+
+    $(".game-over").empty();
+    $(".replay").empty();
     randPick = Math.floor(Math.random()*totalQuestions);
     // randomly pick a question
     while (pickedQ.indexOf(randPick) > -1 && pickedQ.length < totalQuestions){
@@ -98,9 +111,7 @@ $(document).ready(function(){
       correctAnswer = answerChoice[randPick].indexOf(answer[randPick]);
       console.log(answerChoice[randPick]);
       console.log(correctAnswer);
-      $(".start").remove();
-      //$(".correct-answer").remove();
-     // $(".image-holder").remove();
+      $(".start").empty();
       $(".question").html(questions[randPick]);
       var tempAnswer = answerChoice[randPick];
       var answerTemp = $("<button>");
@@ -170,6 +181,13 @@ $(document).ready(function(){
  //   assignQuestion(questions[randPick], answerChoice[randPick]);
   })
 
+   $(".replay").on("click", function(){
+    console.log("play again!");
+    console.log("replay");
+    pickQuestion();
+ //   assignQuestion(questions[randPick], answerChoice[randPick]);
+  })
+
   function run() {
     number = 5;
     intervalId = setInterval(decrement, 1000);
@@ -199,7 +217,7 @@ $(document).ready(function(){
       var displayResults = "Total correct: " + correctCount + "<br>"; 
       displayResults += "Total incorrect: " + inCorrectCount + "<br>"; 
       displayResults += "Total unanswered: " + unAnsweredCount + "<br>";
-      $(".game-over").append(displayResults);
+      $(".game-over").html(displayResults);
       replay();
   }
   
