@@ -59,24 +59,6 @@ $(document).ready(function(){
       unAnsweredCount = 0;
 
   }
-/*
-  var replay = function(){
-      var replayBtn = $("<button>");
-          replayBtn
-          .addClass("replay")
-          .text("Replay!")
-          .appendTo($(".question"));
-      pickedQ = [];
-      correctCount = 0;
-      inCorrectCount = 0;
-      unAnsweredCount = 0;
-      console.log(replayBtn);
-      console.log(correctCount);
-      console.log(inCorrectCount);
-      console.log(unAnsweredCount);
-
-  }
-*/
 
 var replay = function(){
   $(".replay").html("Restart game!");
